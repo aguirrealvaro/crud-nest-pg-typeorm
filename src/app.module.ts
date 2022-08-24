@@ -10,10 +10,9 @@ import { ProductsModule } from "./products/products.module";
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware) //it can also accepts multiple middlewares
-      //.exclude({ path: "products", method: RequestMethod.GET })
-      .forRoutes(ProductsController);
+    consumer.apply(AuthMiddleware).forRoutes(ProductsController);
+    // apply() can also accepts multiple middlewares
+    //.exclude({ path: "products", method: RequestMethod.GET })
     //.forRoutes("products");
     //.forRoutes({ path: 'products', method: RequestMethod.GET })
     //.forRoutes({ path: 'products', method: RequestMethod.ALL })
