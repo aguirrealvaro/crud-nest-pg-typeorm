@@ -32,18 +32,24 @@ export class ProductsService {
   }
 
   update(id: string, body: UpdateProductDto) {
+    const productToEditIndex = this.products.findIndex((product) => product.id === id);
+
     const productToEdit = this.products.find((product) => product.id === id);
 
     const productEdited: ProductI = { ...productToEdit, ...body };
 
-    //this.products.filter((product) => product.id === id).push(productEdited);
+    this.products.splice(productToEditIndex, 1).push(productEdited);
 
-    return productEdited;
+    return productToEdit;
   }
 
   delete(id: string) {
-    const deletedProduct = this.products.find((product) => product.id === id);
+    const deletedProductIndex = this.products.findIndex((product) => product.id === id);
 
-    return deletedProduct;
+    const productToDelete = this.products.find((product) => product.id === id);
+
+    this.products.splice(deletedProductIndex, 1);
+
+    return productToDelete;
   }
 }
