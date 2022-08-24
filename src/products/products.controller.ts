@@ -1,5 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateProductDto, UpdateProductDto } from "./products.types";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  //HttpStatus,
+  Param,
+  Post,
+  Put,
+  //Response,
+} from "@nestjs/common";
+import { CreateProductDto, UpdateProductDto } from "./products.dto";
 
 @Controller("products")
 export class ProductsController {
@@ -37,4 +47,10 @@ export class ProductsController {
     console.log(id);
     return "This actions deletes a product";
   }
+
+  //library-specific, not recommended
+  /* @Get()
+  findAll2(@Response({ passthrough: true }) res: Response) {
+    res.status(HttpStatus.OK).send("Using library-specific approach");
+  } */
 }
