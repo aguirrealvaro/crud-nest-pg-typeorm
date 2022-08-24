@@ -10,9 +10,12 @@ import {
   //Response,
 } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
+//import { ProductsService } from "./products.service";
 
 @Controller("products")
 export class ProductsController {
+  //constructor(private productsService: ProductsService) {}
+
   @Get()
   //@HttpCode(200) //not needed
   async findAll(): Promise<string> {
@@ -21,16 +24,12 @@ export class ProductsController {
 
   @Get("/:id")
   async findOne(@Param("id") id: string): Promise<string> {
-    console.log(id);
+    console.log(typeof id);
     return "This action returns a single product";
   }
 
-  @Post(":/id")
-  async createProduct(
-    @Param("id") id: string,
-    @Body() body: CreateProductDto
-  ): Promise<string> {
-    console.log(id);
+  @Post()
+  async create(@Body() body: CreateProductDto): Promise<string> {
     console.log(body);
     return "This action creates a product";
   }
