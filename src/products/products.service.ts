@@ -22,6 +22,7 @@ export class ProductsService {
   }
 
   create(body: CreateProductDto) {
+    console.log(typeof body.price);
     if (!body.name) {
       //throw new HttpException("name field is required", HttpStatus.BAD_REQUEST);
       throw new BadRequestException("name field is required");
@@ -31,9 +32,14 @@ export class ProductsService {
       throw new BadRequestException("price field is required");
     }
 
+    if (!body.available) {
+      throw new BadRequestException("available field is required");
+    }
+
     const bodyParsed = {
       ...(body.name && { name: body.name }),
       ...(body.price && { price: body.price }),
+      ...(body.available && { available: body.available }),
     };
 
     const newProduct: ProductI = {
