@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductI } from "./products.interfaces";
 
@@ -16,6 +16,15 @@ export class ProductsService {
   }
 
   create(body: CreateProductDto) {
+    if (!body.name) {
+      //throw new HttpException("name field is required", HttpStatus.BAD_REQUEST);
+      throw new BadRequestException("name field is required");
+    }
+
+    if (!body.price) {
+      throw new BadRequestException("price field is required");
+    }
+
     const bodyParsed = {
       ...(body.name && { name: body.name }),
       ...(body.price && { price: body.price }),
