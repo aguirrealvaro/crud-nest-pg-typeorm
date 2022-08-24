@@ -1,4 +1,10 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductI } from "./products.interfaces";
 
@@ -41,9 +47,13 @@ export class ProductsService {
   }
 
   update(id: string, body: UpdateProductDto) {
-    const productToEditIndex = this.products.findIndex((product) => product.id === id);
-
     const productToEdit = this.products.find((product) => product.id === id);
+
+    if (!productToEdit) {
+      throw new NotFoundException("Product not found");
+    }
+
+    const productToEditIndex = this.products.findIndex((product) => product.id === id);
 
     //delete
     this.products.splice(productToEditIndex, 1);
@@ -57,9 +67,13 @@ export class ProductsService {
   }
 
   delete(id: string) {
-    const deletedProductIndex = this.products.findIndex((product) => product.id === id);
-
     const productToDelete = this.products.find((product) => product.id === id);
+
+    if (!productToDelete) {
+      throw new NotFoundException("Product not found");
+    }
+
+    const deletedProductIndex = this.products.findIndex((product) => product.id === id);
 
     this.products.splice(deletedProductIndex, 1);
 
