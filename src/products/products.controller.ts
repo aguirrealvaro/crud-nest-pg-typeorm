@@ -10,11 +10,11 @@ import {
   //Response,
 } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
-//import { ProductsService } from "./products.service";
+import { ProductsService } from "./products.service";
 
 @Controller("products")
 export class ProductsController {
-  //constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService) {}
 
   @Get()
   //@HttpCode(200) //not needed
