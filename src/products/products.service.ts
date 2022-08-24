@@ -16,9 +16,14 @@ export class ProductsService {
   }
 
   create(body: CreateProductDto) {
+    const bodyParsed = {
+      ...(body.name && { name: body.name }),
+      ...(body.price && { price: body.price }),
+    };
+
     const newProduct: ProductI = {
-      id: crypto.randomUUID(),
-      ...body,
+      id: Math.random().toString(36).slice(2),
+      ...bodyParsed,
     };
 
     this.products.push(newProduct);
