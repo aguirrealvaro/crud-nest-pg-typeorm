@@ -10,6 +10,7 @@ import {
   //Response,
 } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
+import { ProductI } from "./products.interfaces";
 import { ProductsService } from "./products.service";
 
 @Controller("products")
@@ -18,33 +19,28 @@ export class ProductsController {
 
   @Get()
   //@HttpCode(200) //not needed
-  async findAll(): Promise<string> {
-    return "This action returns all products";
+  async findAll(): Promise<ProductI[]> {
+    return this.productsService.findAll();
   }
 
   @Get("/:id")
-  async findOne(@Param("id") id: string): Promise<string> {
-    console.log(typeof id);
-    return "This action returns a single product";
+  async findOne(@Param("id") id: string): Promise<ProductI> {
+    return this.productsService.findOne(id);
   }
 
   @Post()
-  async create(@Body() body: CreateProductDto): Promise<string> {
-    console.log(body);
-    return "This action creates a product";
+  async create(@Body() body: CreateProductDto): Promise<ProductI> {
+    return this.productsService.create(body);
   }
 
   @Put("/:id")
-  async update(@Param("id") id: string, @Body() body: UpdateProductDto) {
-    console.log(id);
-    console.log(body);
-    return "This actions updates a product";
+  async update(@Param("id") id: string, @Body() body: UpdateProductDto): Promise<ProductI> {
+    return this.productsService.update(id, body);
   }
 
   @Delete("/:id")
-  async delete(@Param("id") id: string) {
-    console.log(id);
-    return "This actions deletes a product";
+  async delete(@Param("id") id: string): Promise<ProductI> {
+    return this.productsService.delete(id);
   }
 
   //library-specific, not recommended

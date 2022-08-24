@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateProductDto } from "./products.dto";
+import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductI } from "./products.interfaces";
 
 @Injectable()
@@ -24,5 +24,21 @@ export class ProductsService {
     this.products.push(newProduct);
 
     return newProduct;
+  }
+
+  update(id: string, body: UpdateProductDto) {
+    const productToEdit = this.products.find((product) => product.id === id);
+
+    const productEdited: ProductI = { ...productToEdit, ...body };
+
+    //this.products.filter((product) => product.id === id).push(productEdited);
+
+    return productEdited;
+  }
+
+  delete(id: string) {
+    const deletedProduct = this.products.find((product) => product.id === id);
+
+    return deletedProduct;
   }
 }
