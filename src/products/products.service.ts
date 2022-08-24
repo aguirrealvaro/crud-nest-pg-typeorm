@@ -22,15 +22,9 @@ export class ProductsService {
       throw new BadRequestException("name field is required");
     } */
 
-    const bodyParsed = {
-      ...(body.name && { name: body.name }),
-      ...(body.price && { price: body.price }),
-      ...(body.available && { available: body.available }),
-    };
-
     const newProduct: ProductI = {
       id: Math.random().toString(36).slice(2),
-      ...bodyParsed,
+      ...body,
     };
 
     this.products.push(newProduct);

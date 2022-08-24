@@ -1,21 +1,25 @@
-import { IsString, IsInt, IsBoolean, IsOptional } from "class-validator";
+import { IsString, IsInt, IsBoolean, IsOptional, IsNotEmpty } from "class-validator";
 
 export class CreateProductDto {
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsInt()
+  @IsNotEmpty()
   price: number;
 
-  @IsOptional()
   @IsBoolean()
-  available?: boolean;
+  @IsOptional()
+  available: boolean;
 }
 
 export class UpdateProductDto {
+  @IsOptional()
   @IsString()
   name: string;
 
+  @IsOptional()
   @IsInt()
   price: number;
 
