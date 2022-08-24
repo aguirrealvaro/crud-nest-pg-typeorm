@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductI } from "./products.interfaces";
 
@@ -22,19 +16,11 @@ export class ProductsService {
   }
 
   create(body: CreateProductDto) {
-    console.log(typeof body.price);
-    if (!body.name) {
-      //throw new HttpException("name field is required", HttpStatus.BAD_REQUEST);
+    // alredy validated with ValidationPipe
+    /* if (!body.name) {
+      // throw new HttpException("name field is required", HttpStatus.BAD_REQUEST);
       throw new BadRequestException("name field is required");
-    }
-
-    if (!body.price) {
-      throw new BadRequestException("price field is required");
-    }
-
-    if (!body.available) {
-      throw new BadRequestException("available field is required");
-    }
+    } */
 
     const bodyParsed = {
       ...(body.name && { name: body.name }),

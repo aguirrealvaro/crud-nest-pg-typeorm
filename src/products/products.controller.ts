@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  //HttpStatus,
-  Param,
-  Post,
-  Put,
-  //Response,
-} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductI } from "./products.interfaces";
 import { ProductsService } from "./products.service";
@@ -18,7 +8,7 @@ export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
   @Get()
-  //@HttpCode(200) //not needed
+  // @HttpCode(200) // not needed
   async findAll(): Promise<ProductI[]> {
     return this.productsService.findAll();
   }
@@ -29,12 +19,19 @@ export class ProductsController {
   }
 
   @Post()
-  async create(@Body() body: CreateProductDto): Promise<ProductI> {
+  // @UsePipes(new ValidationPipe())
+  // Parameter-scoped pipes are useful when the validation logic concerns only one specified parameter.
+  // No need to add the pipe here because it is globally enabled on main.ts
+  async create(@Body(/* new ValidationPipe() */) body: CreateProductDto): Promise<ProductI> {
     return this.productsService.create(body);
   }
 
+  // if desired, i can use a pipe for the parameter id:
   @Put("/:id")
-  async update(@Param("id") id: string, @Body() body: UpdateProductDto): Promise<ProductI> {
+  async update(
+    @Param("id" /* , ParseIntPipe */) id: string,
+    @Body() body: UpdateProductDto
+  ): Promise<ProductI> {
     return this.productsService.update(id, body);
   }
 
@@ -43,7 +40,7 @@ export class ProductsController {
     return this.productsService.delete(id);
   }
 
-  //library-specific, not recommended
+  // library-specific, not recommended
   /* @Get()
   findAll2(@Response({ passthrough: true }) res: Response) {
     res.status(HttpStatus.OK).send("Using library-specific approach");
