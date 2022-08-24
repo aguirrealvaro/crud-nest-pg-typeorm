@@ -36,11 +36,15 @@ export class ProductsService {
 
     const productToEdit = this.products.find((product) => product.id === id);
 
+    //delete
+    this.products.splice(productToEditIndex, 1);
+
+    //push new edited
     const productEdited: ProductI = { ...productToEdit, ...body };
 
-    this.products.splice(productToEditIndex, 1).push(productEdited);
+    this.products.push(productEdited);
 
-    return productToEdit;
+    return productEdited;
   }
 
   delete(id: string) {
