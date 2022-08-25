@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, Repository } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
-import { ProductI } from "./products.interfaces";
 
 @Injectable()
 export class ProductsService {
@@ -12,14 +11,17 @@ export class ProductsService {
     private productsRepository: Repository<ProductsEntity>
   ) {}
 
-  private readonly products: ProductI[] = [];
-
   findAll(): Promise<ProductsEntity[]> {
     return this.productsRepository.find();
   }
 
   findOne(id: number): Promise<ProductsEntity> {
-    return this.productsRepository.findOneBy({ id });
+    const product = this.productsRepository.findOneBy({ id });
+
+    if (!product) {
+      throw new NotFoundException("Product not found");
+    }
+    return product;
   }
 
   create(body: CreateProductDto): Promise<ProductsEntity> {

@@ -2,7 +2,6 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@
 import { DeleteResult } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
-import { ProductI } from "./products.interfaces";
 import { ProductsService } from "./products.service";
 
 @Controller("products")
@@ -34,7 +33,7 @@ export class ProductsController {
   async update(
     @Param("id", ParseIntPipe) id: number,
     @Body() body: UpdateProductDto
-  ): Promise<ProductI> {
+  ): Promise<ProductsEntity> {
     return this.productsService.update(id, body);
   }
 
