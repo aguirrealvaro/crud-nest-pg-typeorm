@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
 import { ProductsService } from "./products.service";
+import { ProductsByIdPipe } from "@/pipes/products-by-id.pipe";
 
 @Controller("products")
 export class ProductsController {
@@ -13,7 +14,9 @@ export class ProductsController {
   }
 
   @Get("/:id")
-  async findOne(@Param("id", ParseIntPipe) id: number): Promise<ProductsEntity> {
+  async findOne(
+    @Param("id", ParseIntPipe, ProductsByIdPipe) id: number
+  ): Promise<ProductsEntity> {
     return this.productsService.findOne(id);
   }
 
@@ -30,14 +33,16 @@ export class ProductsController {
 
   @Put("/:id")
   async update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id", ParseIntPipe, ProductsByIdPipe) id: number,
     @Body() body: UpdateProductDto
   ): Promise<ProductsEntity> {
     return this.productsService.update(id, body);
   }
 
   @Delete("/:id")
-  async delete(@Param("id", ParseIntPipe) id: number): Promise<ProductsEntity> {
+  async delete(
+    @Param("id", ParseIntPipe, ProductsByIdPipe) id: number
+  ): Promise<ProductsEntity> {
     return this.productsService.delete(id);
   }
 }
