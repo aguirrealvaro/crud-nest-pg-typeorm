@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
-import { DeleteResult, UpdateResult } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
 import { ProductsService } from "./products.service";
@@ -33,12 +32,12 @@ export class ProductsController {
   async update(
     @Param("id", ParseIntPipe) id: number,
     @Body() body: UpdateProductDto
-  ): Promise<UpdateResult> {
+  ): Promise<ProductsEntity> {
     return this.productsService.update(id, body);
   }
 
   @Delete("/:id")
-  async delete(@Param("id", ParseIntPipe) id: number): Promise<DeleteResult> {
+  async delete(@Param("id", ParseIntPipe) id: number): Promise<ProductsEntity> {
     return this.productsService.delete(id);
   }
 }
