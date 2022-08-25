@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { DeleteResult, Repository } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
 import { ProductI } from "./products.interfaces";
@@ -14,63 +14,30 @@ export class ProductsService {
 
   private readonly products: ProductI[] = [];
 
-  findAll(): ProductI[] {
-    return this.products;
+  findAll(): Promise<ProductsEntity[]> {
+    return this.productsRepository.find();
   }
 
-  findOne(id: string): ProductI {
-    const product = this.products.find((product) => product.id === id);
-    return product;
+  findOne(id: number): Promise<ProductsEntity> {
+    return this.productsRepository.findOneBy({ id });
   }
 
-  create(body: CreateProductDto) {
+  create(body: CreateProductDto): Promise<ProductsEntity> {
     // alredy validated with ValidationPipe
     /* if (!body.name) {
       // throw new HttpException("name field is required", HttpStatus.BAD_REQUEST);
       throw new BadRequestException("name field is required");
     } */
 
-    const newProduct: ProductI = {
-      id: Math.random().toString(36).slice(2),
-      ...body,
-    };
-
-    this.products.push(newProduct);
-
-    return newProduct;
+    return this.productsRepository.save(body);
   }
 
-  update(id: string, body: UpdateProductDto) {
-    const productToEdit = this.products.find((product) => product.id === id);
-
-    if (!productToEdit) {
-      throw new NotFoundException("Product not found");
-    }
-
-    const productToEditIndex = this.products.findIndex((product) => product.id === id);
-
-    //delete
-    this.products.splice(productToEditIndex, 1);
-
-    //push new edited
-    const productEdited: ProductI = { ...productToEdit, ...body };
-
-    this.products.push(productEdited);
-
-    return productEdited;
+  async update(id: number, body: UpdateProductDto): Promise<ProductsEntity> {
+    await this.productsRepository.update(id, body);
+    return this.productsRepository.findOneBy({ id });
   }
 
-  delete(id: string) {
-    const productToDelete = this.products.find((product) => product.id === id);
-
-    if (!productToDelete) {
-      throw new NotFoundException("Product not found");
-    }
-
-    const deletedProductIndex = this.products.findIndex((product) => product.id === id);
-
-    this.products.splice(deletedProductIndex, 1);
-
-    return productToDelete;
+  delete(id: number): Promise<DeleteResult> {
+    return this.productsRepository.delete(id);
   }
 }
