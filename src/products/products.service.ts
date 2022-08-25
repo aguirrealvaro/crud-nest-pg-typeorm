@@ -44,7 +44,7 @@ export class ProductsService {
       throw new NotFoundException("Product not found");
     }
 
-    await this.productsRepository.update(product, body);
+    await this.productsRepository.update(id, body);
 
     const editedProduct = await this.productsRepository.findOneBy({ id });
 
@@ -58,7 +58,7 @@ export class ProductsService {
       throw new NotFoundException("Product not found");
     }
 
-    await this.productsRepository.delete(product);
+    await this.productsRepository.delete(id);
 
     return product;
   }
