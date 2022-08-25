@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
-import { DeleteResult } from "typeorm";
+import { DeleteResult, UpdateResult } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
 import { ProductsEntity } from "./products.entity";
 import { ProductsService } from "./products.service";
@@ -33,7 +33,7 @@ export class ProductsController {
   async update(
     @Param("id", ParseIntPipe) id: number,
     @Body() body: UpdateProductDto
-  ): Promise<ProductsEntity> {
+  ): Promise<UpdateResult> {
     return this.productsService.update(id, body);
   }
 
