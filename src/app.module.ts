@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthMiddleware } from "./middleware/auth.middleware";
 import { ProductsController } from "./products/products.controller";
-import { ProductEntity } from "./products/products.entity";
+import { ProductsEntity } from "./products/products.entity";
 import { ProductsModule } from "./products/products.module";
 
 @Module({
@@ -16,7 +16,7 @@ import { ProductsModule } from "./products/products.module";
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [ProductEntity],
+      entities: [ProductsEntity],
       synchronize: !!process.env.DB_SYNC,
     }),
     ProductsModule,

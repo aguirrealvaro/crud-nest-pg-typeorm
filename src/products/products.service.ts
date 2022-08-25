@@ -2,14 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateProductDto, UpdateProductDto } from "./products.dto";
-import { ProductEntity } from "./products.entity";
+import { ProductsEntity } from "./products.entity";
 import { ProductI } from "./products.interfaces";
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(ProductEntity)
-    private productsRepository: Repository<ProductEntity>
+    @InjectRepository(ProductsEntity)
+    private productsRepository: Repository<ProductsEntity>
   ) {}
 
   private readonly products: ProductI[] = [];
