@@ -11,6 +11,6 @@ export class ProductsEntity {
   @Column()
   price: number;
 
-  @Column()
-  available: boolean;
+  @Column({ nullable: true })
+  available?: boolean;
 }
