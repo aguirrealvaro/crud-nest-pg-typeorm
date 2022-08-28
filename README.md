@@ -1,5 +1,3 @@
-# CRUD with Nest, Postgre and TypeORM
+# crud-nest-pg-typeorm
 
-`npm install`
-
-`npm start`
+Basic CRUD built with NEST, PostgreSQL & TypeORM
