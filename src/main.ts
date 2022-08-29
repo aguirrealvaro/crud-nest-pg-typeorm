@@ -7,6 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // global middleware, only works with a functional middleware https://docs.nestjs.com/middleware#functional-middleware
   //app.use(AuthMiddleware);
+  app.setGlobalPrefix("api");
   app.useGlobalPipes(new ValidationPipe()); //global validation pipe
   await app.listen(3000);
 }
